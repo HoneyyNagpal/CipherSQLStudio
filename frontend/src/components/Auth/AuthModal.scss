@@ -1,0 +1,169 @@
+// =============================================================================
+// AuthModal.scss
+// =============================================================================
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(4px);
+  z-index: $z-modal;
+  @include flex-center;
+  padding: $space-4;
+  animation: fadeIn 0.2s ease;
+}
+
+.auth-modal {
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-xl;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: $shadow-lg;
+  animation: fadeIn 0.25s ease;
+  overflow: hidden;
+
+  &__header {
+    padding: $space-8 $space-6 $space-6;
+    text-align: center;
+    border-bottom: 1px solid $color-border;
+    position: relative;
+  }
+
+  &__logo {
+    @include flex-center;
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, $color-accent-blue, $color-accent-purple);
+    border-radius: $radius-lg;
+    font-family: $font-mono;
+    font-size: $font-size-base;
+    font-weight: $font-weight-bold;
+    color: #fff;
+    margin: 0 auto $space-4;
+  }
+
+  &__title {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-text-primary;
+    font-family: $font-mono;
+    margin-bottom: $space-1;
+  }
+
+  &__subtitle {
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+  }
+
+  &__close {
+    position: absolute;
+    top: $space-4;
+    right: $space-4;
+    width: 32px;
+    height: 32px;
+    @include flex-center;
+    background: $color-bg-tertiary;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    cursor: pointer;
+    transition: all $transition-fast;
+    @include focus-ring;
+
+    &:hover {
+      color: $color-text-primary;
+      background: $color-border;
+    }
+  }
+
+  &__form {
+    padding: $space-6;
+    display: flex;
+    flex-direction: column;
+    gap: $space-4;
+  }
+
+  &__field {
+    display: flex;
+    flex-direction: column;
+    gap: $space-1;
+
+    label {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $color-text-secondary;
+    }
+
+    input {
+      background: $color-bg-dark;
+      border: 1px solid $color-border;
+      border-radius: $radius-md;
+      padding: $space-3 $space-4;
+      color: $color-text-primary;
+      font-size: $font-size-sm;
+      font-family: $font-body;
+      transition: border-color $transition-fast;
+      min-height: 44px; // Touch-friendly
+
+      &::placeholder { color: $color-text-muted; }
+
+      &:focus {
+        outline: none;
+        border-color: $color-accent-blue;
+        @include glow($color-accent-blue);
+      }
+    }
+  }
+
+  &__error {
+    background: rgba($color-accent-red, 0.1);
+    border: 1px solid rgba($color-accent-red, 0.25);
+    border-radius: $radius-md;
+    padding: $space-3;
+    font-size: $font-size-sm;
+    color: $color-accent-red;
+    text-align: center;
+  }
+
+  &__submit {
+    width: 100%;
+    justify-content: center;
+    padding: $space-3;
+    font-size: $font-size-base;
+    min-height: 48px;
+    margin-top: $space-1;
+  }
+
+  &__footer {
+    padding: $space-4 $space-6 $space-6;
+    text-align: center;
+    border-top: 1px solid $color-border;
+
+    p {
+      font-size: $font-size-sm;
+      color: $color-text-muted;
+    }
+  }
+
+  &__switch-btn {
+    color: $color-accent-blue;
+    font-size: $font-size-sm;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-weight: $font-weight-medium;
+    transition: color $transition-fast;
+    @include focus-ring;
+
+    &:hover {
+      color: lighten($color-accent-blue, 10%);
+    }
+  }
+}

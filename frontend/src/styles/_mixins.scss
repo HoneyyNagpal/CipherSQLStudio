@@ -1,0 +1,152 @@
+// =============================================================================
+// _mixins.scss
+// Reusable SCSS mixins
+// =============================================================================
+
+@use 'variables' as *;
+
+// ─── Responsive Breakpoints (mobile-first) ────────────────────────────────────
+@mixin sm {
+  @media screen and (min-width: #{$bp-sm}) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media screen and (min-width: #{$bp-md}) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media screen and (min-width: #{$bp-lg}) {
+    @content;
+  }
+}
+
+// ─── Flexbox Helpers ──────────────────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@mixin flex-start {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+// ─── Text Truncation ──────────────────────────────────────────────────────────
+@mixin text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// ─── Scrollbar Styling ────────────────────────────────────────────────────────
+@mixin custom-scrollbar($width: 6px) {
+  scrollbar-width: thin;
+  scrollbar-color: $color-border-light $color-bg-secondary;
+
+  &::-webkit-scrollbar {
+    width: $width;
+    height: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $color-bg-secondary;
+    border-radius: $radius-full;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $color-border-light;
+    border-radius: $radius-full;
+
+    &:hover {
+      background: $color-text-muted;
+    }
+  }
+}
+
+// ─── Card Base ────────────────────────────────────────────────────────────────
+@mixin card {
+  background: $color-bg-card;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+// ─── Focus Ring ───────────────────────────────────────────────────────────────
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid $color-accent-blue;
+    outline-offset: 2px;
+  }
+}
+
+// ─── Button Base ──────────────────────────────────────────────────────────────
+@mixin btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-4;
+  border: none;
+  border-radius: $radius-md;
+  font-family: $font-body;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all $transition-fast;
+  white-space: nowrap;
+  @include focus-ring;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+// ─── Panel Header ─────────────────────────────────────────────────────────────
+@mixin panel-header {
+  @include flex-between;
+  padding: $space-3 $space-4;
+  background: $color-bg-secondary;
+  border-bottom: 1px solid $color-border;
+  min-height: 44px; // Touch-friendly
+
+  .panel-header__title {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-secondary;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: $font-mono;
+  }
+}
+
+// ─── Difficulty Badge ─────────────────────────────────────────────────────────
+@mixin difficulty-badge($color) {
+  background: rgba($color, 0.15);
+  color: $color;
+  border: 1px solid rgba($color, 0.3);
+  padding: $space-1 $space-2;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+// ─── Glow Effect ──────────────────────────────────────────────────────────────
+@mixin glow($color) {
+  box-shadow: 0 0 0 1px rgba($color, 0.4), 0 0 16px rgba($color, 0.15);
+}

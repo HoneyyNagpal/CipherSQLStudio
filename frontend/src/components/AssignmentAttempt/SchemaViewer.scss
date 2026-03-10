@@ -1,0 +1,217 @@
+// =============================================================================
+// SchemaViewer.scss
+// =============================================================================
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.schema-viewer {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 200px;
+
+  &__header {
+    @include panel-header;
+    flex-shrink: 0;
+  }
+
+  &__toggle {
+    @include flex-start;
+    gap: $space-1;
+    background: $color-bg-dark;
+    border: 1px solid $color-border;
+    border-radius: $radius-sm;
+    padding: 2px;
+  }
+
+  &__toggle-btn {
+    @include btn-base;
+    background: transparent;
+    color: $color-text-muted;
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    padding: $space-1 $space-2;
+    border-radius: 3px;
+
+    &:hover:not(:disabled) {
+      color: $color-text-secondary;
+      background: $color-bg-tertiary;
+    }
+
+    &--active {
+      background: $color-bg-secondary !important;
+      color: $color-text-primary !important;
+    }
+  }
+
+  &__tables {
+    display: flex;
+    gap: $space-1;
+    padding: $space-2 $space-3;
+    background: $color-bg-dark;
+    border-bottom: 1px solid $color-border;
+    overflow-x: auto;
+    flex-shrink: 0;
+    @include custom-scrollbar(4px);
+  }
+
+  &__table-btn {
+    @include flex-start;
+    gap: $space-1;
+    padding: $space-1 $space-3;
+    border-radius: $radius-full;
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    color: $color-text-muted;
+    background: transparent;
+    border: 1px solid transparent;
+    white-space: nowrap;
+    transition: all $transition-fast;
+    min-height: 32px; // Touch-friendly
+
+    &:hover {
+      color: $color-text-primary;
+      background: $color-bg-tertiary;
+    }
+
+    &--active {
+      color: $color-accent-blue !important;
+      background: rgba($color-accent-blue, 0.1) !important;
+      border-color: rgba($color-accent-blue, 0.3) !important;
+    }
+  }
+
+  &__table-icon {
+    font-size: 0.65rem;
+    opacity: 0.7;
+  }
+
+  &__content {
+    flex: 1;
+    overflow: auto;
+    @include custom-scrollbar;
+  }
+
+  &__loading,
+  &__empty {
+    @include flex-center;
+    flex: 1;
+    padding: $space-8;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+
+  // ─── Column List ─────────────────────────────────────────────────────────────
+  &__columns {
+    padding: $space-2;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+
+  &__col-row {
+    @include flex-between;
+    padding: $space-2 $space-3;
+    border-radius: $radius-sm;
+    transition: background $transition-fast;
+    gap: $space-2;
+
+    &:hover {
+      background: $color-bg-secondary;
+    }
+  }
+
+  &__col-name {
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: $color-text-primary;
+    font-weight: $font-weight-medium;
+  }
+
+  &__col-type {
+    @include flex-start;
+    gap: $space-1;
+    flex-shrink: 0;
+  }
+
+  &__type-badge {
+    font-size: 0.65rem;
+    font-family: $font-mono;
+    padding: 1px $space-2;
+    border-radius: $radius-full;
+    font-weight: $font-weight-medium;
+
+    &--num  { background: rgba($color-accent-blue, 0.15);   color: $color-accent-blue; }
+    &--str  { background: rgba($color-accent-green, 0.15);  color: $color-accent-green; }
+    &--date { background: rgba($color-accent-purple, 0.15); color: $color-accent-purple; }
+    &--bool { background: rgba($color-accent-orange, 0.15); color: $color-accent-orange; }
+    &--other { background: $color-bg-tertiary; color: $color-text-muted; }
+  }
+
+  &__constraint {
+    font-size: 0.6rem;
+    font-family: $font-mono;
+    color: $color-text-muted;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  // ─── Sample Data Table ────────────────────────────────────────────────────────
+  &__sample-wrapper {
+    overflow: auto;
+    @include custom-scrollbar;
+  }
+
+  &__sample-table {
+    width: 100%;
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+
+    thead tr {
+      background: $color-bg-secondary;
+
+      th {
+        padding: $space-2 $space-3;
+        text-align: left;
+        color: $color-text-secondary;
+        font-weight: $font-weight-semibold;
+        text-transform: uppercase;
+        font-size: 0.65rem;
+        letter-spacing: 0.05em;
+        white-space: nowrap;
+        border-bottom: 1px solid $color-border;
+      }
+    }
+
+    tbody tr {
+      border-bottom: 1px solid rgba($color-border, 0.4);
+
+      &:hover { background: rgba($color-accent-blue, 0.03); }
+
+      td {
+        padding: $space-2 $space-3;
+        color: $color-text-primary;
+        max-width: 150px;
+        @include text-ellipsis;
+      }
+    }
+  }
+
+  &__sample-note {
+    padding: $space-2 $space-3;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-family: $font-mono;
+    border-top: 1px solid $color-border;
+    background: $color-bg-secondary;
+  }
+
+  &__null {
+    color: $color-accent-orange;
+    font-style: italic;
+  }
+}

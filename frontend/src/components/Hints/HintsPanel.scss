@@ -1,0 +1,202 @@
+// =============================================================================
+// HintsPanel.scss
+// =============================================================================
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.hints-panel {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  &__header {
+    @include panel-header;
+    flex-shrink: 0;
+  }
+
+  &__header-left {
+    @include flex-start;
+    gap: $space-2;
+  }
+
+  &__badge {
+    font-size: 0.6rem;
+    font-family: $font-mono;
+    background: linear-gradient(135deg, rgba($color-accent-blue, 0.15), rgba($color-accent-purple, 0.15));
+    color: $color-accent-purple;
+    border: 1px solid rgba($color-accent-purple, 0.3);
+    padding: 1px $space-2;
+    border-radius: $radius-full;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: $font-weight-semibold;
+  }
+
+  &__input-area {
+    padding: $space-3 $space-4;
+    border-bottom: 1px solid $color-border;
+    display: flex;
+    flex-direction: column;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
+
+  &__question-input {
+    width: 100%;
+    background: $color-bg-dark;
+    border: 1px solid $color-border;
+    border-radius: $radius-md;
+    padding: $space-2 $space-3;
+    color: $color-text-primary;
+    font-family: $font-body;
+    font-size: $font-size-sm;
+    resize: none;
+    transition: border-color $transition-fast;
+    min-height: 60px;
+
+    &::placeholder {
+      color: $color-text-muted;
+    }
+
+    &:focus {
+      outline: none;
+      border-color: $color-accent-blue;
+    }
+
+    &:disabled {
+      opacity: 0.5;
+    }
+  }
+
+  &__get-btn {
+    align-self: flex-end;
+    min-width: 100px;
+    min-height: 36px;
+  }
+
+  &__context-note {
+    padding: $space-2 $space-4;
+    border-bottom: 1px solid $color-border;
+    background: rgba($color-accent-yellow, 0.05);
+
+    span {
+      font-size: $font-size-xs;
+      color: $color-accent-yellow;
+      font-family: $font-mono;
+    }
+  }
+
+  &__error {
+    padding: $space-3 $space-4;
+    margin: $space-3;
+    background: rgba($color-accent-red, 0.1);
+    border: 1px solid rgba($color-accent-red, 0.2);
+    border-radius: $radius-md;
+
+    span {
+      font-size: $font-size-sm;
+      color: $color-accent-red;
+    }
+  }
+
+  &__hints-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-3;
+    display: flex;
+    flex-direction: column;
+    gap: $space-3;
+    @include custom-scrollbar;
+  }
+
+  &__empty {
+    @include flex-center;
+    flex-direction: column;
+    flex: 1;
+    gap: $space-2;
+    padding: $space-8 $space-4;
+    text-align: center;
+
+    p {
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+    }
+
+    span {
+      font-size: $font-size-xs;
+      color: $color-text-muted;
+      max-width: 220px;
+      line-height: 1.5;
+    }
+  }
+
+  &__empty-icon {
+    font-size: 2rem;
+    filter: grayscale(0.5);
+  }
+
+  // ─── Hint Card ──────────────────────────────────────────────────────────────
+  &__hint-card {
+    background: rgba($color-accent-blue, 0.04);
+    border: 1px solid rgba($color-accent-blue, 0.15);
+    border-left: 3px solid $color-accent-blue;
+    border-radius: 0 $radius-md $radius-md 0;
+    padding: $space-3;
+    overflow: hidden;
+  }
+
+  &__hint-header {
+    @include flex-between;
+    margin-bottom: $space-2;
+  }
+
+  &__hint-label {
+    font-size: $font-size-xs;
+    font-family: $font-mono;
+    color: $color-accent-blue;
+    font-weight: $font-weight-semibold;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  &__hint-time {
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-family: $font-mono;
+  }
+
+  &__hint-text {
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  // ─── Loading dots ────────────────────────────────────────────────────────────
+  &__generating {
+    @include flex-start;
+    gap: $space-3;
+    padding: $space-3;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+  }
+
+  &__dots {
+    @include flex-start;
+    gap: $space-1;
+
+    span {
+      width: 6px;
+      height: 6px;
+      background: $color-accent-blue;
+      border-radius: $radius-full;
+      animation: pulse 1.2s ease-in-out infinite;
+
+      &:nth-child(2) { animation-delay: 0.2s; }
+      &:nth-child(3) { animation-delay: 0.4s; }
+    }
+  }
+}

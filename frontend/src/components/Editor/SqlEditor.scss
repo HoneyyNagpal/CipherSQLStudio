@@ -1,0 +1,71 @@
+// =============================================================================
+// SqlEditor.scss
+// =============================================================================
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.sql-editor {
+  @include card;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 220px;
+
+  @include md {
+    min-height: 280px;
+  }
+
+  &__header {
+    @include panel-header;
+    flex-shrink: 0;
+  }
+
+  &__actions {
+    @include flex-start;
+    gap: $space-3;
+  }
+
+  &__shortcut {
+    display: none;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-family: $font-mono;
+
+    @include sm {
+      display: block;
+    }
+  }
+
+  &__monaco-wrapper {
+    flex: 1;
+    min-height: 0; // Important for flex children with overflow
+    // Monaco needs explicit height in flex containers
+    height: 100%;
+
+    // Monaco editor dark theme customizations
+    .monaco-editor {
+      border-radius: 0 0 $radius-lg $radius-lg;
+    }
+
+    // Custom scrollbar for Monaco
+    .monaco-scrollable-element {
+      > .scrollbar {
+        > .slider {
+          background: $color-border-light !important;
+          border-radius: $radius-full !important;
+        }
+      }
+    }
+  }
+
+  &__loading {
+    @include flex-center;
+    height: 100%;
+    min-height: 200px;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+}

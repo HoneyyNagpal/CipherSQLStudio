@@ -1,0 +1,82 @@
+// =============================================================================
+// Navbar.scss
+// =============================================================================
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.navbar {
+  @include flex-between;
+  padding: $space-3 $space-4;
+  background: $color-bg-secondary;
+  border-bottom: 1px solid $color-border;
+  position: sticky;
+  top: 0;
+  z-index: $z-dropdown;
+
+  @include md {
+    padding: $space-3 $space-8;
+  }
+
+  &__brand {
+    @include flex-start;
+    gap: $space-3;
+    text-decoration: none;
+
+    &-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, $color-accent-blue, $color-accent-purple);
+      border-radius: $radius-md;
+      @include flex-center;
+      font-size: $font-size-sm;
+      font-weight: $font-weight-bold;
+      color: #fff;
+      font-family: $font-mono;
+      flex-shrink: 0;
+
+      @include md {
+        width: 36px;
+        height: 36px;
+        font-size: $font-size-base;
+      }
+    }
+
+    &-name {
+      font-family: $font-mono;
+      font-weight: $font-weight-bold;
+      font-size: $font-size-sm;
+      color: $color-text-primary;
+      letter-spacing: -0.02em;
+
+      @include md {
+        font-size: $font-size-base;
+      }
+
+      span {
+        color: $color-accent-blue;
+      }
+    }
+  }
+
+  &__actions {
+    @include flex-start;
+    gap: $space-2;
+  }
+
+  &__user {
+    @include flex-start;
+    gap: $space-2;
+
+    &-name {
+      display: none;
+      font-size: $font-size-sm;
+      color: $color-text-secondary;
+      font-family: $font-mono;
+
+      @include sm {
+        display: block;
+      }
+    }
+  }
+}

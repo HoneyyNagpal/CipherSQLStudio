@@ -1,0 +1,361 @@
+// =============================================================================
+// AssignmentAttempt.scss
+// Main attempt interface layout - mobile-first
+// =============================================================================
+
+@use '../../styles/variables' as *;
+@use '../../styles/mixins' as *;
+
+.attempt-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 57px); // 57px = navbar height
+  overflow: hidden;
+  animation: fadeIn 0.3s ease;
+}
+
+// ─── Top Bar ──────────────────────────────────────────────────────────────────
+.attempt-topbar {
+  @include flex-between;
+  padding: $space-3 $space-4;
+  background: $color-bg-secondary;
+  border-bottom: 1px solid $color-border;
+  flex-shrink: 0;
+  gap: $space-3;
+  flex-wrap: wrap;
+
+  @include md {
+    padding: $space-3 $space-6;
+    flex-wrap: nowrap;
+  }
+
+  &__left {
+    @include flex-start;
+    gap: $space-3;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__back {
+    @include flex-start;
+    gap: $space-1;
+    font-size: $font-size-sm;
+    color: $color-text-secondary;
+    text-decoration: none;
+    transition: color $transition-fast;
+    flex-shrink: 0;
+    min-height: 36px;
+    padding: $space-1 $space-2;
+    border-radius: $radius-sm;
+
+    &:hover {
+      color: $color-text-primary;
+      background: $color-bg-tertiary;
+    }
+  }
+
+  &__title-group {
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__title {
+    font-family: $font-mono;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    color: $color-text-primary;
+    @include text-ellipsis;
+
+    @include md {
+      font-size: $font-size-base;
+    }
+  }
+
+  &__meta {
+    @include flex-start;
+    gap: $space-2;
+    margin-top: $space-1;
+  }
+
+  &__right {
+    @include flex-start;
+    gap: $space-2;
+    flex-shrink: 0;
+  }
+}
+
+// ─── Main Workspace ───────────────────────────────────────────────────────────
+.attempt-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+
+  @include md {
+    flex-direction: row;
+  }
+}
+
+// ─── Left Panel (Question + Schema) ──────────────────────────────────────────
+.attempt-left {
+  display: flex;
+  flex-direction: column;
+  background: $color-bg-dark;
+  border-bottom: 1px solid $color-border;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  // Mobile: fixed height collapsible section
+  height: auto;
+  max-height: 45vh;
+
+  @include md {
+    border-bottom: none;
+    border-right: 1px solid $color-border;
+    width: 320px;
+    max-height: none;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  @include lg {
+    width: 360px;
+  }
+}
+
+// Question Panel
+.question-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+
+  &__header {
+    @include panel-header;
+    flex-shrink: 0;
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: $space-4;
+    @include custom-scrollbar;
+  }
+
+  &__text {
+    font-size: $font-size-sm;
+    color: $color-text-primary;
+    line-height: 1.8;
+    white-space: pre-wrap;
+
+    p {
+      margin-bottom: $space-3;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  &__schema-divider {
+    border-top: 1px solid $color-border;
+    flex-shrink: 0;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+
+    @include md {
+      height: 240px;
+    }
+  }
+}
+
+// ─── Right Panel (Editor + Results + Hints) ───────────────────────────────────
+.attempt-right {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+
+  @include md {
+    flex-direction: row;
+  }
+}
+
+// Editor + Results column
+.attempt-editor-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
+  gap: 0;
+  border-right: none;
+
+  @include md {
+    border-right: 1px solid $color-border;
+  }
+}
+
+// Editor container
+.attempt-editor-wrap {
+  flex: 0 0 auto;
+  height: 260px;
+  border-bottom: 1px solid $color-border;
+  overflow: hidden;
+
+  @include sm {
+    height: 300px;
+  }
+
+  @include md {
+    height: 45%;
+  }
+
+  @include lg {
+    height: 50%;
+  }
+}
+
+// Results container
+.attempt-results-wrap {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
+}
+
+// Hints panel column
+.attempt-hints-col {
+  flex-shrink: 0;
+  border-top: 1px solid $color-border;
+  height: 280px;
+
+  @include md {
+    border-top: none;
+    width: 280px;
+    height: auto;
+  }
+
+  @include lg {
+    width: 320px;
+  }
+}
+
+// ─── Loading and Error states ─────────────────────────────────────────────────
+.attempt-loading {
+  @include flex-center;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-4;
+  color: $color-text-muted;
+  font-family: $font-mono;
+  font-size: $font-size-sm;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+.attempt-error {
+  @include flex-center;
+  flex: 1;
+  flex-direction: column;
+  gap: $space-3;
+  color: $color-text-secondary;
+  text-align: center;
+  padding: $space-8;
+
+  strong {
+    color: $color-accent-red;
+    font-size: $font-size-lg;
+  }
+
+  a {
+    color: $color-accent-blue;
+    font-size: $font-size-sm;
+    transition: color $transition-fast;
+
+    &:hover { color: lighten($color-accent-blue, 10%); }
+  }
+}
+
+// ─── Attempt History Panel ────────────────────────────────────────────────────
+.attempt-history {
+  position: fixed;
+  right: 0;
+  top: 57px;
+  bottom: 0;
+  width: 280px;
+  background: $color-bg-secondary;
+  border-left: 1px solid $color-border;
+  z-index: $z-dropdown;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform $transition-normal;
+  box-shadow: $shadow-lg;
+
+  &--open {
+    transform: translateX(0);
+  }
+
+  &__header {
+    @include panel-header;
+  }
+
+  &__list {
+    flex: 1;
+    overflow-y: auto;
+    @include custom-scrollbar;
+    padding: $space-2;
+  }
+
+  &__item {
+    padding: $space-3;
+    border-radius: $radius-md;
+    border: 1px solid $color-border;
+    margin-bottom: $space-2;
+    cursor: pointer;
+    transition: all $transition-fast;
+
+    &:hover {
+      border-color: $color-accent-blue;
+      background: rgba($color-accent-blue, 0.04);
+    }
+
+    &--success {
+      border-left: 3px solid $color-accent-green;
+    }
+
+    &--failed {
+      border-left: 3px solid $color-accent-red;
+    }
+  }
+
+  &__item-query {
+    font-family: $font-mono;
+    font-size: $font-size-xs;
+    color: $color-text-secondary;
+    @include text-ellipsis;
+    margin-bottom: $space-1;
+  }
+
+  &__item-meta {
+    @include flex-between;
+    font-size: $font-size-xs;
+    color: $color-text-muted;
+    font-family: $font-mono;
+  }
+
+  &__empty {
+    @include flex-center;
+    flex: 1;
+    color: $color-text-muted;
+    font-size: $font-size-sm;
+    font-family: $font-mono;
+    padding: $space-8;
+    text-align: center;
+  }
+}
