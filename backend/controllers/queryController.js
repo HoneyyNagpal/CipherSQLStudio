@@ -31,14 +31,11 @@ const executeQuery = async (req, res) => {
 
   const cleanedSql = sanitizeResult.cleanedSql;
   const startTime = Date.now();
-  let wasSuccessful = false;
-  let errorMessage = null;
   let rowCount = 0;
 
   try {
     // Execute on reader pool (limited PostgreSQL role)
     const result = await readerPool.query(cleanedSql);
-    wasSuccessful = true;
     rowCount = result.rowCount || result.rows.length;
 
     const executionTime = Date.now() - startTime;
@@ -66,7 +63,6 @@ const executeQuery = async (req, res) => {
     });
 
   } catch (pgError) {
-    errorMessage = pgError.message;
     const executionTime = Date.now() - startTime;
 
     // Save failed attempt if user is logged in (non-blocking)
@@ -86,6 +82,51 @@ const executeQuery = async (req, res) => {
       error: cleanPgError(pgError.message),
       type: 'QUERY_ERROR',
       executionTime,
+    });
+  }
+};
+
+/**
+ * POST /api/query/explain
+ * Body: { sql: string, assignmentId: string }
+ * Runs EXPLAIN ANALYZE on the query and returns the plan tree.
+ * NOTE: this actually executes the query, so it goes through the
+ * same assignment check, sanitizer, and reader pool as /execute.
+ */
+const explainQuery = async (req, res) => {
+  const { sql, assignmentId } = req.body;
+
+  if (!assignmentId) {
+    return res.status(400).json({ error: 'assignmentId is required.' });
+  }
+
+  const assignment = ASSIGNMENTS.find(a => a.id === assignmentId);
+  if (!assignment) {
+    return res.status(404).json({ error: 'Assignment not found.' });
+  }
+
+  const sanitizeResult = sanitizeQuery(sql);
+  if (!sanitizeResult.safe) {
+    return res.status(400).json({
+      error: sanitizeResult.reason,
+      type: 'VALIDATION_ERROR',
+    });
+  }
+
+  const cleanedSql = sanitizeResult.cleanedSql;
+
+  try {
+    const explainSql = `EXPLAIN (ANALYZE, FORMAT JSON, BUFFERS) ${cleanedSql}`;
+    const result = await readerPool.query(explainSql);
+    const plan = result.rows[0]['QUERY PLAN'][0];
+
+    return res.json({ success: true, plan });
+
+  } catch (pgError) {
+    return res.status(400).json({
+      success: false,
+      error: cleanPgError(pgError.message),
+      type: 'QUERY_ERROR',
     });
   }
 };
@@ -125,4 +166,4 @@ const getAttempts = async (req, res) => {
   }
 };
 
-module.exports = { executeQuery, getAttempts };
+module.exports = { executeQuery, explainQuery, getAttempts };
