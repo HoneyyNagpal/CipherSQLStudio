@@ -185,18 +185,14 @@ frontend Results panel renders <table> with data
 
 ## Features
 
-### Core (90%)
-- ✅ Assignment listing with difficulty badges
-- ✅ Full attempt interface (question + schema viewer + editor + results)
-- ✅ Monaco Editor with SQL syntax highlighting
-- ✅ Real-time query execution against PostgreSQL
-- ✅ LLM hints via Gemini (guidance only, not solutions)
-- ✅ Query error display with helpful messages
-- ✅ Mobile-first responsive design (320px → 1281px+)
 
-### Optional (10%)
-- ✅ User authentication (JWT-based login/signup)
-- ✅ Save query attempts per assignment per user
+-  Assignment listing with difficulty badges
+-  Full attempt interface (question + schema viewer + editor + results)
+-  Monaco Editor with SQL syntax highlighting
+-  Real-time query execution against PostgreSQL
+-  LLM hints via Gemini (guidance only, not solutions)
+-  Query error display with helpful messages
+-  Mobile-first responsive design (320px → 1281px+)
 
 ---
 
