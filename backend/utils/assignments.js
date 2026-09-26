@@ -11,7 +11,7 @@ const ASSIGNMENTS = [
     title: 'Customer Orders Report',
     difficulty: 'easy',
     tags: ['SELECT', 'JOIN', 'WHERE'],
-    description: 'Practice basic SELECT queries, filtering, and simple JOINs using an e-commerce database.',
+    description: 'Pull customers by city, find February orders, and total up revenue from delivered orders.',
     question: `You are working with an e-commerce database. Answer the following:
 
 1. List all customers from Mumbai along with their email addresses.
@@ -35,7 +35,7 @@ const ASSIGNMENTS = [
     title: 'Advanced Joins & Aggregations',
     difficulty: 'medium',
     tags: ['JOIN', 'GROUP BY', 'HAVING', 'Subquery'],
-    description: 'Work with multiple tables using GROUP BY, HAVING, and subqueries on the e-commerce dataset.',
+    description: 'Find repeat customers, rank categories by revenue, and spot customers who never ordered.',
     question: `Using the e-commerce database, write queries to:
 
 1. Find all customers who have placed MORE than 1 order. Show their name, email, and order count.
@@ -59,7 +59,7 @@ const ASSIGNMENTS = [
     title: 'Employee Salary Analysis',
     difficulty: 'medium',
     tags: ['JOIN', 'GROUP BY', 'Self-JOIN', 'NULL handling'],
-    description: 'Analyze employee and salary data including self-joins for manager lookups.',
+    description: 'Compare department pay averages and match each employee to their manager, including those with none.',
     question: `You have access to an HR database with employees, departments, and salaries. Write queries to:
 
 1. List all employees with their department name and current salary (where to_date IS NULL means current).
@@ -83,7 +83,7 @@ const ASSIGNMENTS = [
     title: 'Library Overdue Tracker',
     difficulty: 'hard',
     tags: ['DATE functions', 'CASE WHEN', 'Subquery', 'Window Functions'],
-    description: 'Advanced query writing using date arithmetic, conditional logic, and subqueries on library data.',
+    description: 'Flag overdue books by days late, find the most-borrowed title, and label each loan as on time, late, or active.',
     question: `Using the library database with members, books, and borrowings:
 
 1. Find all currently borrowed books (return_date IS NULL). Show member name, book title, due date, and how many days overdue they are (use CURRENT_DATE).
@@ -107,7 +107,7 @@ const ASSIGNMENTS = [
     title: 'Window Functions & CTEs',
     difficulty: 'hard',
     tags: ['CTE', 'Window Functions', 'RANK', 'ROW_NUMBER'],
-    description: 'Master advanced SQL with Common Table Expressions and window functions.',
+    description: 'Rank employees by salary within their department, track running revenue over time, and find the runner-up product in each category.',
     question: `Using the e-commerce and HR databases, write queries using CTEs and window functions:
 
 1. Using a CTE, find customers whose total spending is above the average total spending across all customers.

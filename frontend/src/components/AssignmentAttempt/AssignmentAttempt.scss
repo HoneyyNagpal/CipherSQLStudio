@@ -225,8 +225,9 @@
 // Results container
 .attempt-results-wrap {
   flex: 1;
-  overflow: hidden;
+  overflow-y: auto;
   min-height: 0;
+  @include custom-scrollbar;
 }
 
 // Hints panel column

@@ -9,7 +9,7 @@
 
 // ─── Google Fonts ─────────────────────────────────────────────────────────────
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600&display=swap');
 // ─── Base Styles ──────────────────────────────────────────────────────────────
 body {
   font-family: $font-body;
@@ -154,13 +154,20 @@ html {
   &--hard   { @include difficulty-badge($color-hard); }
 
   &--tag {
-    background: $color-bg-tertiary;
-    color: $color-text-secondary;
-    border: 1px solid $color-border;
-    padding: $space-1 $space-2;
-    border-radius: $radius-full;
+    color: $color-text-muted;
     font-size: $font-size-xs;
-    font-family: $font-mono;
+    font-family: $font-body;
+
+    &::after {
+      content: '·';
+      margin-left: $space-3;
+      color: $color-border-light;
+    }
+
+    &:last-child::after {
+      content: '';
+      margin-left: 0;
+    }
   }
 }
 

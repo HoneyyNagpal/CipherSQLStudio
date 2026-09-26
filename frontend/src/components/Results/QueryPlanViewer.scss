@@ -1,0 +1,28 @@
+.query-plan-viewer {
+  margin-top: 16px;
+  font-family: monospace;
+  font-size: 13px;
+
+  h4 {
+    margin-bottom: 8px;
+  }
+}
+
+.plan-node {
+  border-left: 2px solid #444;
+  padding-left: 8px;
+  margin-bottom: 6px;
+
+  &__header {
+    font-weight: 500;
+  }
+
+  &__warning {
+    color: #e67e22;
+  }
+
+  &__stats {
+    color: #888;
+    font-size: 12px;
+  }
+}

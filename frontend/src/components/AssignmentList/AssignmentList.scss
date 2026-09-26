@@ -21,27 +21,25 @@
 .assignment-list {
   &__header {
     margin-bottom: $space-8;
+    max-width: 640px;
 
     h1 {
-      font-family: $font-mono;
+      font-family: $font-heading;
       font-size: $font-size-2xl;
-      font-weight: $font-weight-bold;
+      font-weight: $font-weight-semibold;
       color: $color-text-primary;
       margin-bottom: $space-2;
+      letter-spacing: -0.01em;
 
       @include md {
         font-size: $font-size-3xl;
-      }
-
-      span {
-        color: $color-accent-blue;
       }
     }
 
     p {
       color: $color-text-secondary;
       font-size: $font-size-sm;
-      max-width: 500px;
+      line-height: 1.6;
 
       @include md {
         font-size: $font-size-base;
@@ -51,30 +49,32 @@
 
   &__filters {
     @include flex-start;
-    gap: $space-2;
+    gap: $space-1;
     margin-bottom: $space-6;
     flex-wrap: wrap;
+    border-bottom: 1px solid $color-border;
   }
 
   &__filter-btn {
-    @include btn-base;
-    background: $color-bg-secondary;
-    color: $color-text-secondary;
-    border: 1px solid $color-border;
+    background: transparent;
+    color: $color-text-muted;
+    border: none;
+    border-bottom: 2px solid transparent;
     padding: $space-2 $space-3;
-    font-size: $font-size-xs;
-    font-family: $font-mono;
-    min-height: 36px; // Touch-friendly
+    font-size: $font-size-sm;
+    font-family: $font-body;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    transition: color $transition-fast, border-color $transition-fast;
+    margin-bottom: -1px;
 
     &:hover:not(:disabled) {
-      background: $color-bg-tertiary;
       color: $color-text-primary;
     }
 
     &--active {
-      background: $color-bg-tertiary;
-      color: $color-accent-blue;
-      border-color: $color-accent-blue;
+      color: $color-text-primary;
+      border-bottom-color: $color-accent-blue;
     }
   }
 
@@ -99,7 +99,9 @@
 
     p {
       font-size: $font-size-lg;
+      color: $color-text-secondary;
       margin-bottom: $space-2;
+      font-family: $font-heading;
     }
 
     span {
@@ -126,61 +128,60 @@
 .assignment-card {
   @include card;
   cursor: pointer;
-  transition: all $transition-normal;
+  border-left: 3px solid $color-border;
+  transition: border-left-color $transition-fast, background $transition-fast;
   text-decoration: none;
   display: flex;
   flex-direction: column;
-  min-height: 180px;
+  min-height: 170px;
 
   @include md {
-    min-height: 200px;
+    min-height: 190px;
   }
 
   &:hover {
-    border-color: $color-accent-blue;
-    transform: translateY(-2px);
-    @include glow($color-accent-blue);
+    background: $color-bg-tertiary;
   }
 
-  &:active {
-    transform: translateY(0);
-  }
+  &--easy   { border-left-color: rgba($color-easy, 0.5); }
+  &--medium { border-left-color: rgba($color-medium, 0.5); }
+  &--hard   { border-left-color: rgba($color-hard, 0.5); }
+
+  &:hover.assignment-card--easy   { border-left-color: $color-easy; }
+  &:hover.assignment-card--medium { border-left-color: $color-medium; }
+  &:hover.assignment-card--hard   { border-left-color: $color-hard; }
 
   &__header {
     @include flex-between;
-    padding: $space-4;
-    border-bottom: 1px solid $color-border;
+    padding: $space-4 $space-4 0;
   }
 
-  &__number {
-    font-family: $font-mono;
+  &__tablecount {
     font-size: $font-size-xs;
     color: $color-text-muted;
+    font-family: $font-body;
   }
 
   &__body {
-    padding: $space-4;
+    padding: $space-3 $space-4 $space-4;
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: $space-3;
+    gap: $space-2;
   }
 
   &__title {
-    font-size: $font-size-base;
+    font-family: $font-heading;
+    font-size: $font-size-md;
     font-weight: $font-weight-semibold;
     color: $color-text-primary;
-    line-height: 1.4;
-
-    @include md {
-      font-size: $font-size-md;
-    }
+    line-height: 1.35;
   }
 
   &__description {
     font-size: $font-size-sm;
     color: $color-text-secondary;
-    line-height: 1.5;
+    line-height: 1.55;
     flex: 1;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -189,68 +190,33 @@
   }
 
   &__footer {
-    @include flex-between;
-    padding: $space-3 $space-4;
-    background: $color-bg-secondary;
-    border-top: 1px solid $color-border;
+    padding: 0 $space-4 $space-4;
   }
 
   &__tags {
     @include flex-start;
-    gap: $space-1;
+    gap: $space-3;
     flex-wrap: wrap;
-    flex: 1;
-    overflow: hidden;
-  }
-
-  &__meta {
-    @include flex-start;
-    gap: $space-2;
-    flex-shrink: 0;
-    color: $color-text-muted;
-    font-size: $font-size-xs;
-    font-family: $font-mono;
-  }
-
-  &__arrow {
-    color: $color-accent-blue;
-    opacity: 0;
-    transition: all $transition-fast;
-    transform: translateX(-4px);
-  }
-
-  &:hover &__arrow {
-    opacity: 1;
-    transform: translateX(0);
-  }
-
-  // ─── Skeleton loading card ─────────────────────────────────────────────────
-  &--skeleton {
-    cursor: default;
-    pointer-events: none;
-
-    &:hover {
-      transform: none;
-      border-color: $color-border;
-      box-shadow: none;
-    }
   }
 }
+
+
 
 .skeleton-card {
   @include card;
   padding: $space-4;
-  min-height: 180px;
+  min-height: 170px;
   display: flex;
   flex-direction: column;
   gap: $space-3;
+  border-left: 3px solid $color-border;
 
   &__line {
     background: linear-gradient(
       90deg,
-      #161b22 25%,
-      #21262d 50%,
-      #161b22 75%
+      $color-bg-secondary 25%,
+      $color-bg-tertiary 50%,
+      $color-bg-secondary 75%
     );
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;

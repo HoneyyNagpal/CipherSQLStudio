@@ -79,7 +79,7 @@
 @mixin card {
   background: $color-bg-card;
   border: 1px solid $color-border;
-  border-radius: $radius-lg;
+  border-radius: $radius-md;
   overflow: hidden;
 }
 
@@ -99,13 +99,13 @@
   gap: $space-2;
   padding: $space-2 $space-4;
   border: none;
-  border-radius: $radius-md;
+  border-radius: $radius-sm;
   font-family: $font-body;
   font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   cursor: pointer;
   text-decoration: none;
-  transition: all $transition-fast;
+  transition: background-color $transition-fast, border-color $transition-fast;
   white-space: nowrap;
   @include focus-ring;
 
@@ -116,37 +116,48 @@
 }
 
 // ─── Panel Header ─────────────────────────────────────────────────────────────
+// Sentence case, no letter-spacing, quiet by design — the label should read
+// like a caption, not shout like a dashboard widget title.
 @mixin panel-header {
   @include flex-between;
   padding: $space-3 $space-4;
   background: $color-bg-secondary;
   border-bottom: 1px solid $color-border;
-  min-height: 44px; // Touch-friendly
+  min-height: 44px;
 
   .panel-header__title {
     font-size: $font-size-sm;
-    font-weight: $font-weight-semibold;
+    font-weight: $font-weight-medium;
     color: $color-text-secondary;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    font-family: $font-mono;
+    font-family: $font-body;
   }
 }
 
 // ─── Difficulty Badge ─────────────────────────────────────────────────────────
+// A colored dot plus plain text — the color carries the meaning,
+// not a tinted pill background.
 @mixin difficulty-badge($color) {
-  background: rgba($color, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   color: $color;
-  border: 1px solid rgba($color, 0.3);
-  padding: $space-1 $space-2;
-  border-radius: $radius-full;
+  font-family: $font-body;
   font-size: $font-size-xs;
-  font-weight: $font-weight-semibold;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-weight: $font-weight-medium;
+
+  &::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    flex-shrink: 0;
+  }
 }
 
 // ─── Glow Effect ──────────────────────────────────────────────────────────────
+// Kept for anywhere it's still referenced, but no longer used on hover states —
+// a bright ring on every hover is a generic tell.
 @mixin glow($color) {
-  box-shadow: 0 0 0 1px rgba($color, 0.4), 0 0 16px rgba($color, 0.15);
+  box-shadow: 0 0 0 1px rgba($color, 0.3), 0 0 12px rgba($color, 0.1);
 }

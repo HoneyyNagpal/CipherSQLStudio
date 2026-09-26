@@ -28,7 +28,7 @@ const MONACO_OPTIONS = {
   },
 };
 
-const SqlEditor = ({ value, onChange, onExecute, isExecuting }) => {
+const SqlEditor = ({ value, onChange, onExecute, onExplain, isExecuting, isExplaining }) => {
   const editorRef = useRef(null);
 
   const handleEditorMount = (editor, monaco) => {
@@ -79,6 +79,15 @@ const SqlEditor = ({ value, onChange, onExecute, isExecuting }) => {
         <span className="panel-header__title">SQL Query</span>
         <div className="sql-editor__actions">
           <span className="sql-editor__shortcut">Ctrl+Enter to run</span>
+          <button
+            className={`btn btn--secondary btn--sm${isExplaining ? ' btn--loading' : ''}`}
+            onClick={onExplain}
+            disabled={isExplaining || isExecuting}
+            title="Show query plan (EXPLAIN ANALYZE)"
+          >
+            {!isExplaining && '📊'}
+            {isExplaining ? '' : ' Show Query Plan'}
+          </button>
           <button
             className={`btn btn--success btn--sm${isExecuting ? ' btn--loading' : ''}`}
             onClick={onExecute}

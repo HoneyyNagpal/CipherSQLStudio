@@ -1,5 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import { explainQuery } from '../../services/queryService';
+import QueryPlanViewer from '../Results/QueryPlanViewer';
 import {
   fetchAssignment,
   fetchSchema,
@@ -32,6 +34,11 @@ const AssignmentAttempt = () => {
   const [result, setResult]           = useState(null);
   const [isExecuting, setIsExecuting] = useState(false);
   const [lastError, setLastError]     = useState('');
+
+  // Query plan state
+  const [plan, setPlan]                 = useState(null);
+  const [isExplaining, setIsExplaining] = useState(false);
+  const planRef                         = useRef(null);
 
   // Attempt history panel
   const [showHistory, setShowHistory] = useState(false);
@@ -67,6 +74,13 @@ const AssignmentAttempt = () => {
       .catch(() => {}); // Silently fail - attempts are optional
   }, [user, id]);
 
+  // Scroll the query plan into view the moment it appears
+  useEffect(() => {
+    if (plan && planRef.current) {
+      planRef.current.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  }, [plan]);
+
   const handleExecute = useCallback(async () => {
     if (isExecuting || !sql.trim()) return;
 
@@ -94,6 +108,24 @@ const AssignmentAttempt = () => {
       setIsExecuting(false);
     }
   }, [id, sql, isExecuting, user]);
+
+  const handleExplain = useCallback(async () => {
+    if (isExplaining || !sql.trim()) return;
+
+    setIsExplaining(true);
+    try {
+      const res = await explainQuery(id, sql);
+      if (res.success) {
+        setPlan(res.plan);
+      } else {
+        setLastError(res.error || 'Failed to generate query plan.');
+      }
+    } catch (err) {
+      setLastError(err.response?.data?.error || 'Failed to connect to server.');
+    } finally {
+      setIsExplaining(false);
+    }
+  }, [id, sql, isExplaining]);
 
   const loadAttemptQuery = (attemptQuery) => {
     setSql(attemptQuery);
@@ -190,11 +222,18 @@ const AssignmentAttempt = () => {
                 value={sql}
                 onChange={setSql}
                 onExecute={handleExecute}
+                onExplain={handleExplain}
                 isExecuting={isExecuting}
+                isExplaining={isExplaining}
               />
             </div>
             <div className="attempt-results-wrap">
               <ResultsPanel result={result} isExecuting={isExecuting} />
+              {plan && (
+                <div ref={planRef}>
+                  <QueryPlanViewer plan={plan} />
+                </div>
+              )}
             </div>
           </div>
 

@@ -21,12 +21,12 @@ const AssignmentCard = ({ assignment, index }) => {
   return (
     <Link
       to={`/assignment/${assignment.id}`}
-      className="assignment-card"
+      className={`assignment-card assignment-card--${assignment.difficulty}`}
       style={{ animationDelay: `${index * 0.06}s` }}
     >
       <div className="assignment-card__header">
-        <span className="assignment-card__number">#{String(index + 1).padStart(2, '0')}</span>
         <span className={diffClass}>{assignment.difficulty}</span>
+        <span className="assignment-card__tablecount">{assignment.tableCount} tables</span>
       </div>
 
       <div className="assignment-card__body">
@@ -43,10 +43,6 @@ const AssignmentCard = ({ assignment, index }) => {
             <span className="badge badge--tag">+{assignment.tags.length - 3}</span>
           )}
         </div>
-        <div className="assignment-card__meta">
-          <span>{assignment.tableCount} tables</span>
-          <span className="assignment-card__arrow">→</span>
-        </div>
       </div>
     </Link>
   );
@@ -62,7 +58,6 @@ const AssignmentList = () => {
     const load = async () => {
       try {
         const data = await fetchAssignments();
-        // Sort by difficulty
         data.sort((a, b) => DIFFICULTY_ORDER[a.difficulty] - DIFFICULTY_ORDER[b.difficulty]);
         setAssignments(data);
       } catch {
@@ -81,7 +76,7 @@ const AssignmentList = () => {
   return (
     <div className="assignment-list-page">
       <div className="assignment-list__header">
-        <h1><span>{"<"}</span>SQL Assignments<span>{" />"}</span></h1>
+        <h1>SQL Assignments</h1>
         <p>Select an assignment to practice your SQL skills. Execute queries against real data.</p>
       </div>
 
@@ -105,7 +100,7 @@ const AssignmentList = () => {
 
       {error && (
         <div className="assignment-list__empty">
-          <p>⚠️ Error</p>
+          <p>Something went wrong</p>
           <span>{error}</span>
         </div>
       )}
