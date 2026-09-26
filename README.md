@@ -184,20 +184,14 @@ cost, actual execution time, and row count at each step
 
 ## Features
 
-### Core (90%)
-- ✅ Assignment listing with difficulty badges
-- ✅ Full attempt interface (question + schema viewer + editor + results)
-- ✅ Monaco Editor with SQL syntax highlighting
-- ✅ Real-time query execution against PostgreSQL
-- ✅ LLM hints via Gemini (guidance only, not solutions)
-- ✅ Query error display with helpful messages
-- ✅ Mobile-first responsive design (320px → 1281px+)
-
-### Optional (10%)
-- ✅ User authentication (JWT-based login/signup)
-- ✅ Save query attempts per assignment per user
-
----
+- Assignment listing with difficulty badges and topic tags
+- Full attempt interface (question + schema viewer + editor + results)
+- Monaco Editor with SQL syntax highlighting
+- Real-time query execution against PostgreSQL
+- Query plan viewer using `EXPLAIN ANALYZE`, so learners can see how PostgreSQL actually executes their query and spot slow steps like sequential scans
+- LLM hints via Gemini (guidance only, not solutions)
+- Query error display with helpful messages
+- Mobile-first responsive design (320px → 1281px+)
 
 ## Security
 
@@ -208,4 +202,3 @@ cost, actual execution time, and row count at each step
 - JWT auth protects attempt-saving endpoints
 - Rate limiting on `/api/query`, covering both `/execute` and `/explain` (10 req/min per IP)
 - CORS restricted to frontend origin
-
